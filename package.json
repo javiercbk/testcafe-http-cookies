@@ -1,0 +1,15 @@
+{
+  "name": "testcafe-http-cookies",
+  "version": "1.0.0",
+  "description": "A sample project to reproduce a testcafe bug",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "test": "./node_modules/.bin/testcafe chrome ./e2e-cookie.test.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "testcafe": "^0.18.6"
+  }
+}

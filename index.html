@@ -1,0 +1,39 @@
+<html>
+<body>
+  <div data-e2e-type="main-div">
+    <button data-e2e-type="200-button">200 OK Cookie</button>
+    <button data-e2e-type="403-button">403 FORBIDDEN Cookie</button>
+    <div data-e2e-type="iframe-container"></div>
+    <div data-e2e-type="200-div"></div>
+    <div data-e2e-type="403-div"></div>
+  </div>
+  <script>
+  (function(){
+    var okDiv = document.querySelector('[data-e2e-type="200-div"]');
+    var errorDiv = document.querySelector('[data-e2e-type="403-div"]');
+    var iframeContainer = document.querySelector('[data-e2e-type="iframe-container"]');
+    var makeIframe = function (url, cb) {
+      const iframe = document.createElement('iframe');
+      iframe.style.display = 'none';
+      iframe.src = url;
+      iframeContainer.appendChild(iframe);
+      setTimeout(function() {
+        cb(iframe.contentDocument);
+      }, 100);
+    };
+    var printStatusFactory = function (div) {
+      return function (content) {
+        var cookies = document.cookie;
+        div.innerText = 'content ' + content + ', cookies: ' + cookies;
+      };
+    };
+    document.querySelector('[data-e2e-type="200-button"]').addEventListener('click', function() {
+      makeIframe('/ok', printStatusFactory(okDiv));
+    });
+    document.querySelector('[data-e2e-type="403-button"]').addEventListener('click', function() {
+      makeIframe('/forbidden', printStatusFactory(errorDiv));
+    });
+  })();
+  </script>
+</body>
+</html>
